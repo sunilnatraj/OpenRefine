@@ -29,9 +29,15 @@ package com.google.refine.browsing;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -77,6 +83,46 @@ public class EngineConfig {
      */
     public void validate() {
         _facets.stream().forEach(facetConfig -> facetConfig.validate());
+    }
+
+    /**
+     * Returns an approximation of the names of the columns this engine depends on. This approximation is designed to be
+     * safe: if a set of column names is returned, then the engine does not read any other column than the ones
+     * mentioned, regardless of the data it is executed on.
+     *
+     * @return {@link Optional#empty()} if the columns could not be isolated: in this case, the engine might depend on
+     *         all columns in the project. Note that this is different from returning an empty set, which means that the
+     *         engine does not depend on any column (for instance, if there are no facets).
+     */
+    @JsonIgnore
+    public Optional<Set<String>> getColumnDependencies() {
+        Set<String> result = new HashSet<>();
+        for (FacetConfig config : _facets) {
+            Optional<Set<String>> dependencies = config.getColumnDependencies();
+            if (dependencies.isEmpty()) {
+                return Optional.empty();
+            } else {
+                result.addAll(dependencies.get());
+            }
+        }
+        return Optional.of(result);
+    }
+
+    /**
+     * Translates this engine config by simultaneously substituting column names, as specified by the supplied map. This
+     * is a best effort transformation: some facets might not be fully updated to reflect the new column names, for
+     * instance if the column dependencies of the expressions they rely on cannot be isolated.
+     *
+     * @param substitutions
+     *            a map specifying new names for some columns. Keys of the map are old column names, values are the new
+     *            names for those columns. If a column name is not present in the map, the column is not renamed.
+     * @return a new engine config with updated column names.
+     */
+    public EngineConfig renameColumnDependencies(Map<String, String> substitutions) {
+        List<FacetConfig> newFacets = _facets.stream()
+                .map(facetConfig -> facetConfig.renameColumnDependencies(substitutions))
+                .collect(Collectors.toList());
+        return new EngineConfig(newFacets, _mode);
     }
 
     /**

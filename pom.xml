@@ -93,7 +93,7 @@
     <commons-validator.version>1.9.0</commons-validator.version>
     <org-jvnet-localizer.version>1.31</org-jvnet-localizer.version>
     <!-- v1.15 of commons-codec is needed for Jena 3.14+ - copied from org.apache.jena:jena:pom -->
-    <commons-codec.version>1.17.2</commons-codec.version>
+    <commons-codec.version>1.18.0</commons-codec.version>
     <commons-compress.version>1.27.1</commons-compress.version>
     <velocity.version>2.4.1</velocity.version>
     <marc4j.version>2.9.6</marc4j.version>
@@ -101,8 +101,8 @@
     <odfdom-java.version>0.12.0</odfdom-java.version> <!-- do not update to 0.10.0, see issue #4397 -->
     <vicino.version>1.2.1</vicino.version>
     <clojure.version>1.12.0</clojure.version>
-    <httpclient5.version>5.4.1</httpclient5.version>
-    <httpcore5.version>5.3.2</httpcore5.version>
+    <httpclient5.version>5.4.2</httpclient5.version>
+    <httpcore5.version>5.3.3</httpcore5.version>
     <univocity-csv.version>2.9.1</univocity-csv.version>
     <swc-parser-lazy.version>3.1.9</swc-parser-lazy.version>
     <commons-io.version>2.18.0</commons-io.version>

@@ -77,7 +77,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- dependency versions -->
-    <jackson.version>2.18.3</jackson.version>
+    <jackson.version>2.19.0</jackson.version>
     <servlet-api.version>4.0.1</servlet-api.version>
     <butterfly.version>1.2.6</butterfly.version>
     <slf4j.version>2.0.17</slf4j.version>
@@ -101,7 +101,7 @@
     <odfdom-java.version>0.12.0</odfdom-java.version> <!-- do not update to 0.10.0, see issue #4397 -->
     <vicino.version>1.2.1</vicino.version>
     <clojure.version>1.12.0</clojure.version>
-    <httpclient5.version>5.4.3</httpclient5.version>
+    <httpclient5.version>5.4.4</httpclient5.version>
     <httpcore5.version>5.3.4</httpcore5.version>
     <univocity-csv.version>2.9.1</univocity-csv.version>
     <swc-parser-lazy.version>3.1.9</swc-parser-lazy.version>
